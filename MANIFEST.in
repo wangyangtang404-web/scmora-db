@@ -1,0 +1,7 @@
+include README.md
+include LICENSE
+include metadata.csv
+include metadata_summary.json
+include src/scmora_db/metadata.csv
+include src/scmora_db/py.typed
+recursive-include tests *.py

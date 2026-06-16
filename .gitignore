@@ -1,0 +1,32 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+.venv/
+venv/
+env/
+ENV/
+
+build/
+dist/
+*.egg-info/
+
+.cache/
+*.log
+
+# Large data files live on Hugging Face, not in this package repo.
+*.h5mu
+*.h5ad
+*.loom
+
+# Local editor and OS files.
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

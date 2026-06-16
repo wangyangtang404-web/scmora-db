@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scmora-db"
+version = "0.1.0"
+description = "Search, download, and load SCMORA .h5mu datasets from Hugging Face."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [
+  { name = "SCMORA DB contributors" }
+]
+keywords = ["single-cell", "multiome", "mudata", "h5mu", "huggingface"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+  "huggingface_hub>=0.23",
+  "pandas>=2.0",
+]
+
+[project.optional-dependencies]
+load = [
+  "mudata>=0.3",
+]
+dev = [
+  "build",
+  "mudata>=0.3",
+  "pytest",
+  "twine",
+]
+
+[project.scripts]
+scmora-db = "scmora_db.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+scmora_db = ["metadata.csv", "py.typed"]
