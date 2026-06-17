@@ -246,7 +246,7 @@ def _normalize_catalog(df: pd.DataFrame) -> pd.DataFrame:
 
 def _read_metadata_csv(path: Union[str, Path]) -> pd.DataFrame:
     with Path(path).open("r", encoding="utf-8", newline="") as handle:
-        return pd.read_csv(handle)
+        return pd.read_csv(handle, engine="python")
 
 
 def _as_list(values: Union[str, Iterable[str]]) -> List[str]:
