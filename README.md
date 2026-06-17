@@ -9,6 +9,8 @@ on Hugging Face and are downloaded only when requested.
 
 ## Installation
 
+Python 3.10 or newer is required.
+
 ```bash
 pip install scmora-db
 ```
