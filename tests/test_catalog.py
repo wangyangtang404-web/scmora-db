@@ -2,6 +2,7 @@ import pytest
 
 from scmora_db.catalog import (
     list_usage_tags,
+    list_values,
     resolve_matches,
     search_datasets,
 )
@@ -36,3 +37,10 @@ def test_list_usage_tags_contains_expected_tags():
 
     assert "model_training" in tags
     assert "control" in tags
+
+
+def test_list_values_for_common_filter_fields():
+    assert "Healthy/Control" in list_values("condition")
+    assert "GSE166797" in list_values("gse-ids")
+    assert "GM12878 (Cell Line)" in list_values("detail-sources")
+    assert "model_training" in list_values("groups")

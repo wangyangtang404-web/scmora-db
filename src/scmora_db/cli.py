@@ -11,10 +11,8 @@ from ._version import __version__
 from .catalog import (
     DEFAULT_MAX_AUTO_MATCHES,
     DEFAULT_REPO_ID,
-    list_dataset_ids,
-    list_detail_sources,
-    list_detailed_conditions,
-    list_usage_tags,
+    LISTABLE_FIELDS,
+    list_values,
     search_datasets,
 )
 from .download import download_datasets
@@ -82,7 +80,7 @@ def _build_parser() -> argparse.ArgumentParser:
     list_parser = subparsers.add_parser("list", help="List available metadata values.")
     list_parser.add_argument(
         "field",
-        choices=["dataset-ids", "usage-tags", "detailed-conditions", "detail-sources"],
+        choices=sorted(LISTABLE_FIELDS),
     )
     list_parser.set_defaults(func=_cmd_list)
 
@@ -179,14 +177,7 @@ def _cmd_load(args) -> int:
 
 def _cmd_list(args) -> int:
     kwargs = _catalog_kwargs(args)
-    if args.field == "dataset-ids":
-        values = list_dataset_ids(**kwargs)
-    elif args.field == "usage-tags":
-        values = list_usage_tags(**kwargs)
-    elif args.field == "detailed-conditions":
-        values = list_detailed_conditions(**kwargs)
-    else:
-        values = list_detail_sources(**kwargs)
+    values = list_values(args.field, **kwargs)
 
     for value in values:
         print(value)

@@ -21,3 +21,11 @@ def test_cli_list_usage_tags(capsys):
     captured = capsys.readouterr()
     assert code == 0
     assert "control" in captured.out
+
+
+def test_cli_list_conditions(capsys):
+    code = main(["list", "condition"])
+
+    captured = capsys.readouterr()
+    assert code == 0
+    assert "Healthy/Control" in captured.out

@@ -84,9 +84,16 @@ List available metadata values:
 
 ```bash
 scmora-db list dataset-ids
+scmora-db list dataset-uids
+scmora-db list gse-ids
 scmora-db list usage-tags
+scmora-db list groups
+scmora-db list condition
 scmora-db list detailed-conditions
 scmora-db list detail-sources
+scmora-db list sample-types
+scmora-db list species
+scmora-db list references
 ```
 
 Useful options:

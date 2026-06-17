@@ -14,6 +14,30 @@ DEFAULT_REPO_ID = "shiny321/genome-db"
 DEFAULT_REPO_TYPE = "dataset"
 DEFAULT_METADATA_FILENAME = "metadata.csv"
 DEFAULT_MAX_AUTO_MATCHES = 5
+LISTABLE_FIELDS = {
+    "condition": "condition",
+    "dataset-id": "dataset_id",
+    "dataset-ids": "dataset_id",
+    "dataset-uid": "dataset_uid",
+    "dataset-uids": "dataset_uid",
+    "detailed-condition": "detailed_condition",
+    "detailed-conditions": "detailed_condition",
+    "detail-source": "detail_source",
+    "detail-sources": "detail_source",
+    "group": "group",
+    "groups": "group",
+    "gse-id": "gse_id",
+    "gse-ids": "gse_id",
+    "reference": "reference",
+    "references": "reference",
+    "sample-type": "sample_type",
+    "sample-types": "sample_type",
+    "species": "species",
+    "usage-primary": "usage_primary",
+    "usage-primaries": "usage_primary",
+    "usage-tag": "usage_tags",
+    "usage-tags": "usage_tags",
+}
 
 
 @dataclass(frozen=True)
@@ -151,28 +175,45 @@ def resolve_matches(
 def list_dataset_ids(**catalog_kwargs) -> List[str]:
     """Return sorted dataset IDs."""
 
-    df = load_catalog(**catalog_kwargs)
-    return sorted(df["dataset_id"].dropna().astype(str).unique())
+    return list_values("dataset-id", **catalog_kwargs)
 
 
 def list_detailed_conditions(**catalog_kwargs) -> List[str]:
     """Return sorted detailed conditions."""
 
-    df = load_catalog(**catalog_kwargs)
-    return sorted(df["detailed_condition"].dropna().astype(str).unique())
+    return list_values("detailed-condition", **catalog_kwargs)
 
 
 def list_detail_sources(**catalog_kwargs) -> List[str]:
     """Return sorted detail sources."""
 
-    df = load_catalog(**catalog_kwargs)
-    return sorted(df["detail_source"].dropna().astype(str).unique())
+    return list_values("detail-source", **catalog_kwargs)
 
 
 def list_usage_tags(**catalog_kwargs) -> List[str]:
     """Return sorted individual usage tags."""
 
+    return list_values("usage-tag", **catalog_kwargs)
+
+
+def list_values(field: str, **catalog_kwargs) -> List[str]:
+    """Return sorted unique values for a metadata field.
+
+    ``field`` accepts CLI-style names such as ``usage-tags`` and metadata column
+    names such as ``usage_tags``.
+    """
+
+    normalized = field.strip().replace("_", "-")
+    column = LISTABLE_FIELDS.get(normalized, field.strip())
     df = load_catalog(**catalog_kwargs)
+
+    if column not in df.columns:
+        choices = ", ".join(sorted(LISTABLE_FIELDS))
+        raise ValueError(f"Unknown list field {field!r}. Available fields: {choices}")
+
+    if column != "usage_tags":
+        return sorted(value for value in df[column].dropna().astype(str).unique() if value)
+
     tags = set()
     for value in df["usage_tags"].dropna().astype(str):
         tags.update(tag.strip() for tag in value.split(";") if tag.strip())
