@@ -38,8 +38,9 @@ def load_datasets(
         import mudata as md
     except ImportError as exc:
         raise ImportError(
-            "Loading .h5mu files requires the optional dependency 'mudata'. "
-            "Install it with: pip install 'scmora-db[load]'"
+            "Loading .h5mu files requires the dependency 'mudata'. "
+            "Install scmora-db again to restore its default dependencies: "
+            "pip install scmora-db"
         ) from exc
 
     paths = download_datasets(

@@ -13,11 +13,9 @@ on Hugging Face and are downloaded only when requested.
 pip install scmora-db
 ```
 
-To load `.h5mu` files directly as MuData objects:
+This installs everything needed to search, download, and load `.h5mu` files as
+MuData objects.
 
-```bash
-pip install "scmora-db[load]"
-```
 
 For local development:
 

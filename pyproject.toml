@@ -25,13 +25,11 @@ classifiers = [
 ]
 dependencies = [
   "huggingface_hub>=0.23",
+  "mudata>=0.2.4",
   "pandas>=2.0",
 ]
 
 [project.optional-dependencies]
-load = [
-  "mudata>=0.2.4",
-]
 dev = [
   "build",
   "pytest",
